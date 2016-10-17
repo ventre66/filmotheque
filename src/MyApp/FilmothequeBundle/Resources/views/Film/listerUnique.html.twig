@@ -1,0 +1,50 @@
+{% extends 'MyAppFilmothequeBundle:Default:layout.html.twig' %}
+
+{% block content1 %}
+<div class="card card-signup">
+	<div class="header header-primary text-center">
+		<h3>{{films.titre}}</h3>
+	</div>
+
+
+<table class="table">
+
+	<tr>
+
+	     <th>Affiche</th>
+	     <th>Description</th>
+		<th>Categorie</th>
+		<th>Bande Annonce</th>
+	</tr>
+
+
+
+
+	<tr>
+
+		{% for i in films.images %}
+			<td><img src="{{asset('uploads/img/' ~ i.path ) }}" width="300"></td>
+		{% endfor %}
+
+			<td>{{ films.description }}</td>
+			<td>{{ films.categorie.nom}}</td>
+		{# {% for a in  films.acteurs %}
+			<td>{{a.nom}} {{a.prenom}}</td>
+		{% endfor %} #}
+		{% for v in films.video %}
+			<td><iframe width="300" height="169" src="{{v.path}}" frameborder="0" allowfullscreen></iframe></td>
+		{% endfor %}
+
+
+
+	</tr>
+
+
+
+</table>
+<p><a href="{{ path('myapp_film_lister') }}" class="btn btn-simple btn-primary btn-lg">Retour à la liste des Film</a></p>
+</div>
+
+
+</div>
+{% endblock %}

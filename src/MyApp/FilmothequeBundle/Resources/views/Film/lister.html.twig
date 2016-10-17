@@ -1,0 +1,53 @@
+{% extends 'MyAppFilmothequeBundle:Default:layout.html.twig' %}
+
+{% block content1 %}
+<div class="card card-signup">
+	<div class="header header-primary text-center">
+		<h3>Liste des films</h3>
+	</div>
+
+
+<table class="table">
+
+	<tr>
+	     <th>Film</th>
+	     <th>Affiche</th>
+	     <th>Description</th>
+		<th>Categorie</th>
+		<th>Bande Annonce</th>
+	</tr>
+
+{# je fais une boucle dans ma base de donnée film que j'appelle $film dans filmcontroller #}
+{% for f in films %}
+
+	<tr>
+		<td><a href="{{path('myapp_film_listerunique',{'id': f.id}) }}" style="text-decoration:none">{{ f.titre }}</a></td>
+
+			{% for i in f.images %}
+				<td><a href="{{path('myapp_film_listerunique',{'id': f.id}) }}" style="text-decoration:none"><img src="{{asset('uploads/img/' ~ i.path ) }}" width="100"></a></td>
+		{% endfor %}
+			<td><a href="{{path('myapp_film_listerunique',{'id': f.id}) }}" style="text-decoration:none">{{ f.description | truncate(250, true) }}</a></td>
+			<td>{{ f.categorie.nom}}</td>
+		{# {% for a in  f.acteurs %}
+			<td>{{a.nom}} {{a.prenom}}</td>
+		{% endfor %} #}
+		{% for v in f.video %}
+			<td><iframe width="200" height="113" src="{{v.path}}" frameborder="0" allowfullscreen></iframe></td>
+		{% endfor %}
+
+		<td><a href="{{ path('myapp_film_modifier', { 'id': f.id }) }}" >Modifier</a></td>
+		<td><a href="{{ path('myapp_film_supprimer', { 'id': f.id }) }}">Supprimer</a></td>
+	</tr>
+{% else %}
+	<tr><td>Aucun film n'a été trouvé.</td></tr>
+
+{% endfor %}
+
+</table>
+<p><a href="{{ path('myapp_film_ajouter') }}" class="btn btn-simple btn-primary btn-lg" >Ajouter un film</a><p>
+	{# {% include 'MyAppFilmothequeBundle:Default:pagination.html.twig' %} #}
+</div>
+
+
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'MyAppFilmothequeBundle:Default:layout.html.twig' %}
+
+{% block content %}
+	<div class="header header-primary text-center">
+
+		<h4>Ajouter un Film</h4>
+
+	</div>
+
+{# {% if message %}
+<p>{{ message }}</p>
+{% endif %} #}
+
+{{ form_start(form,{'attr':{'class':'form'}}) }}
+<div class="content">
+	{{ form_rest(form)}}
+</div>
+{{ form_errors(form, {'attr':{'class':'errors'}})}}
+{{ form_end(form) }}
+{% for flashMessage in app.session.flashbag.get('info') %}
+	<div class='alert alert-success'>{{ flashMessage }}</div>
+{% endfor %}
+
+<p><a href="{{ path('myapp_film_lister') }}" class="btn btn-simple btn-primary btn-lg">Retour à la liste des Film</a></p>
+
+{% endblock %}

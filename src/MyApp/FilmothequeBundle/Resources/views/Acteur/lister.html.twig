@@ -1,0 +1,42 @@
+{% extends 'MyAppFilmothequeBundle:Default:layout.html.twig' %}
+
+{% block content1 %}
+
+<div class="card card-signup">
+	<div class="header header-primary text-center">
+		<h3>Liste des acteurs</h3>
+
+	</div>
+	{{ form_start(form,{'action':path('myapp_acteur_rechercher'),'attr':{'class':'form form_recherche','id':'form_recherche'}}) }}
+	{{ form_end(form) }}
+<div class="loading"></div>
+	<div id="resultats_recherche">
+		{% include 'MyAppFilmothequeBundle:Acteur:liste.html.twig' with {'acteurs' : acteurs}  %}
+	</div>
+
+<p><a href="{{ path('myapp_acteur_ajouter') }}" class="btn btn-simple btn-primary btn-lg ">Ajouter un acteur</a><p>
+</div>
+
+
+</div>
+
+<script>
+
+$("#form_recherche").submit(function(){
+    // $("#acteur_recherche_motcle").autocomplete();
+    var motcle = $("#acteur_recherche_motcle").val();
+    var DATA = 'motcle=' + motcle;
+    $.ajax({
+        type: "POST",
+        url: "{{ path('myapp_acteur_rechercher')}}",
+        data: DATA,
+        cache: false,
+        success: function(data){
+           $('#resultats_recherche').html(data);
+        }
+    });
+    return false;
+});
+</script>
+
+{% endblock %}

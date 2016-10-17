@@ -1,0 +1,72 @@
+{% extends 'MyAppFilmothequeBundle:Default:layout.html.twig' %}
+
+{% block content1 %}
+<div class="card card-signup">
+	<div class="header header-primary text-center">
+		<h3>{{acteurs.nom}} {{acteurs.prenom}}</h3>
+	</div>
+
+
+<table class="table">
+
+		<tr>
+
+		     <th>Nom</th>
+		     <th>Prenom</th>
+			<th>Date de naissance</th>
+			<th>Sex</th>
+		</tr>
+
+		<tr>
+			<td>{{acteurs.nom}}</td>
+			<td>{{acteurs.prenom}}</td>
+			<td>{{acteurs.dateNaissance|date('d/m/Y') }}</td>
+			<td>{{acteurs.sexe}}</td>
+
+		</tr>
+
+</table>
+
+	<h3>Filmographie de l'acteur</h3>
+
+<table class="table">
+
+	<tr>
+		<th>Titre</th>
+	     <th>Affiche</th>
+	     <th>Description</th>
+		<th>Bande Annonce</th>
+	</tr>
+
+
+
+	{% for f in acteurs.films %}
+	<tr>
+
+
+	<td><a href="{{path('myapp_film_listerunique',{'id': f.id}) }}" style="text-decoration:none">{{f.titre}} </a></td>
+
+
+		{% for p in f.images %}
+			<td><a href="{{path('myapp_film_listerunique',{'id': f.id}) }}" style="text-decoration:none"><img src="{{asset('uploads/img/' ~ p.path) }}" width="100"></a></td>
+		{% endfor %}
+	<td><a href="{{path('myapp_film_listerunique',{'id': f.id}) }}" style="text-decoration:none">{{f.description | truncate(250, true)}} </a></td>
+		{% for v in f.video %}
+			<td><iframe width="200" height="113" src="{{v.path}}" frameborder="0" allowfullscreen></iframe></td>
+		{% endfor %}
+
+
+
+
+	</tr>
+	{% endfor %}
+
+
+
+</table>
+<p><a href="{{ path('myapp_acteur_lister') }}" class="btn btn-simple btn-primary btn-lg">Retour à la liste des Acteurs</a></p>
+</div>
+
+
+</div>
+{% endblock %}
